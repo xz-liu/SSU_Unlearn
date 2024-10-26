@@ -529,11 +529,11 @@ if __name__ == "__main__":
         # model_path = os.path.join(args.model_path, model_name)
         model_path = model_name
     print("Model path: ", model_path, "with model id: ", model_id)
-    question_file = f"llm_copyright/CoTaEval/eval/FastChat_new/fastchat/llm_judge/data/{args.bench_name}/question.jsonl"
+    question_file = f"SSU_Unlearn/CoTaEval/eval/FastChat_new/fastchat/llm_judge/data/{args.bench_name}/question.jsonl"
     if args.answer_file:
         answer_file = args.answer_file
     else:
-        answer_file = f"llm_copyright/CoTaEval/eval/FastChat_new/fastchat/llm_judge/data/{args.bench_name}/model_answer/{model_id}.jsonl"
+        answer_file = f"SSU_Unlearn/CoTaEval/eval/FastChat_new/fastchat/llm_judge/data/{args.bench_name}/model_answer/{model_id}.jsonl"
 
     question_file = os.path.join(args.base_dir, question_file)
     answer_file = os.path.join(args.base_dir, answer_file)

@@ -134,7 +134,7 @@ def mmlu_only(n, base_model_name,  model_dir, args):
 
     mmlu_score = eval_mmlu(args,model=model, tokenizer=tokenizer, bloom_filter=bloom_filter)
     model_name_for_save = extract_model_name(memFree_Prompt_Config["model_name"])
-    save_path = f"llm_copyright/res/mmlu_res/log_{model_name_for_save}_{intervention}_time_step_{time_step_num}.txt"
+    save_path = f"SSU_Unlearn/res/mmlu_res/log_{model_name_for_save}_{intervention}_time_step_{time_step_num}.txt"
     print("save path is", save_path)
     return mmlu_score
 
@@ -413,7 +413,7 @@ def main(n, file_path, base_model_name, use_fine_tuned_model, fine_tuned_model_n
     if memFree_Prompt_Config['eval_general'] and not args.eval_mode:
         mmlu_score = eval_mmlu(args,model=model, tokenizer=tokenizer, bloom_filter=bloom_filter)
         model_name_for_save = extract_model_name(model_name)
-        save_path = f"llm_copyright/res/mmlu_res/log_{model_name_for_save}_{intervention}_time_step_{time_step_num}.txt"
+        save_path = f"SSU_Unlearn/res/mmlu_res/log_{model_name_for_save}_{intervention}_time_step_{time_step_num}.txt"
         save_filepath = os.path.join(args.base_dir, save_path)
         with open(save_filepath, "a") as f:
             print(
@@ -493,27 +493,27 @@ def eval_infringement(model_name, data_type, prompt_list, gt_list, output_list, 
     if args.previous_time_steps:
         print("Saving results of bookings being unlearned during previous time steps")
         if 'mem_free' in intervention:
-            path = f'llm_copyright/res/output_previous_time_steps/{data_type}_single_{args.single_book}_comp_{model_name}_previous_time_step_{time_step_num}_intervention_{intervention}_{n}_no_context_{no_context}.csv'
+            path = f'SSU_Unlearn/res/output_previous_time_steps/{data_type}_single_{args.single_book}_comp_{model_name}_previous_time_step_{time_step_num}_intervention_{intervention}_{n}_no_context_{no_context}.csv'
         elif intervention == 'cad':
-            path = f'llm_copyright/res/output_previous_time_steps/{data_type}_single_{args.single_book}_comp_{model_name}_previous_time_step_{time_step_num}_intervention_{intervention}_{memFree_Prompt_Config["context_aware_decoding_alpha"]}_no_context_{no_context}.csv'
+            path = f'SSU_Unlearn/res/output_previous_time_steps/{data_type}_single_{args.single_book}_comp_{model_name}_previous_time_step_{time_step_num}_intervention_{intervention}_{memFree_Prompt_Config["context_aware_decoding_alpha"]}_no_context_{no_context}.csv'
         else:
-            path = f'llm_copyright/res/output_previous_time_steps/{data_type}_single_{args.single_book}_comp_{model_name}_previous_time_step_{time_step_num}_intervention_{intervention}_no_context_{no_context}.csv'
+            path = f'SSU_Unlearn/res/output_previous_time_steps/{data_type}_single_{args.single_book}_comp_{model_name}_previous_time_step_{time_step_num}_intervention_{intervention}_no_context_{no_context}.csv'
     elif args.eval_mode:
         print("Evaluation mode is on")
         if 'mem_free' in intervention:
-            path = f'llm_copyright/res/output_norm_res/{data_type}_single_{args.single_book}_comp_{model_name}_time_step_{time_step_num}_intervention_{intervention}_{n}_no_context_{no_context}.csv'
+            path = f'SSU_Unlearn/res/output_norm_res/{data_type}_single_{args.single_book}_comp_{model_name}_time_step_{time_step_num}_intervention_{intervention}_{n}_no_context_{no_context}.csv'
         elif intervention == 'cad':
-            path = f'llm_copyright/res/output_norm_res/{data_type}_single_{args.single_book}_comp_{model_name}_time_step_{time_step_num}_intervention_{intervention}_{memFree_Prompt_Config["context_aware_decoding_alpha"]}_no_context_{no_context}.csv'
+            path = f'SSU_Unlearn/res/output_norm_res/{data_type}_single_{args.single_book}_comp_{model_name}_time_step_{time_step_num}_intervention_{intervention}_{memFree_Prompt_Config["context_aware_decoding_alpha"]}_no_context_{no_context}.csv'
         else:
-            path = f'llm_copyright/res/output_norm_res/{data_type}_single_{args.single_book}_comp_{model_name}_time_step_{time_step_num}_intervention_{intervention}_no_context_{no_context}.csv'
+            path = f'SSU_Unlearn/res/output_norm_res/{data_type}_single_{args.single_book}_comp_{model_name}_time_step_{time_step_num}_intervention_{intervention}_no_context_{no_context}.csv'
     else:
         print("Evaluation mode is off")
         if 'mem_free' in intervention:
-            path = f'llm_copyright/res/output_res/{data_type}_single_{args.single_book}_comp_{model_name}_time_step_{time_step_num}_intervention_{intervention}_{n}_no_context_{no_context}_{train_or_test}.csv'
+            path = f'SSU_Unlearn/res/output_res/{data_type}_single_{args.single_book}_comp_{model_name}_time_step_{time_step_num}_intervention_{intervention}_{n}_no_context_{no_context}_{train_or_test}.csv'
         elif intervention == 'cad':
-            path = f'llm_copyright/res/output_res/{data_type}_single_{args.single_book}_comp_{model_name}_time_step_{time_step_num}_intervention_{intervention}_{memFree_Prompt_Config["context_aware_decoding_alpha"]}_no_context_{no_context}_{train_or_test}.csv'
+            path = f'SSU_Unlearn/res/output_res/{data_type}_single_{args.single_book}_comp_{model_name}_time_step_{time_step_num}_intervention_{intervention}_{memFree_Prompt_Config["context_aware_decoding_alpha"]}_no_context_{no_context}_{train_or_test}.csv'
         else:
-            path = f'llm_copyright/res/output_res/{data_type}_single_{args.single_book}_comp_{model_name}_time_step_{time_step_num}_intervention_{intervention}_no_context_{no_context}_{train_or_test}.csv'
+            path = f'SSU_Unlearn/res/output_res/{data_type}_single_{args.single_book}_comp_{model_name}_time_step_{time_step_num}_intervention_{intervention}_no_context_{no_context}_{train_or_test}.csv'
 
     path = os.path.join(args.base_dir, path)
     print("The path to save is: ", path)
@@ -558,10 +558,10 @@ def eval_mmlu(args, model, tokenizer, bloom_filter=None):
     prompt_instruction = ""
     subject2em = {}
     prior_processor = model._get_logits_processor
-    mmlu_dir = os.path.join(args.base_dir, "llm_copyright/CoTaEval/eval_data/mmlu")
+    mmlu_dir = os.path.join(args.base_dir, "SSU_Unlearn/CoTaEval/eval_data/mmlu")
     for subject in tqdm.tqdm(os.listdir(mmlu_dir)):
         all_em = []
-        train_data = read_jsonl(os.path.join(args.base_dir, f"llm_copyright/CoTaEval/eval_data/mmlu/{subject}/dev.jsonl"))
+        train_data = read_jsonl(os.path.join(args.base_dir, f"SSU_Unlearn/CoTaEval/eval_data/mmlu/{subject}/dev.jsonl"))
         # formulate the prompt
         prompt_orig = ""
         for ex in train_data:
@@ -571,7 +571,7 @@ def eval_mmlu(args, model, tokenizer, bloom_filter=None):
             prompt_orig += ex_instruction
         prompt_orig += prompt_instruction
 
-        test_data = read_jsonl(os.path.join(args.base_dir,f"llm_copyright/CoTaEval/eval_data/mmlu/{subject}/test.jsonl"))
+        test_data = read_jsonl(os.path.join(args.base_dir,f"SSU_Unlearn/CoTaEval/eval_data/mmlu/{subject}/test.jsonl"))
         for ex in tqdm.tqdm(test_data[:50]):
             ex_test_instruction = """Question: {}\nChoices: A: {}, B: {}, C: {}, D: {},\n"""
             answer = ex['answer']
@@ -800,22 +800,22 @@ if __name__ == "__main__":
         print(f"MMLU score: {mmlu_score}")
     elif args.eval_mode:
         print("Running on eval mode; make sure eval_general is set to False")
-        file_path = f'llm_copyright/data_normal_csv/data_norm.csv'
+        file_path = f'SSU_Unlearn/data_normal_csv/data_norm.csv'
     else:
         if args.single_book:
             if args.previous_time_steps:
                 print("Evaluating on previously unlearned data")
                 assert time_step_num > 1
-                file_path = f'llm_copyright/data_csv_single/time_step_{time_step_num}/time_step_{time_step_num}_combined_previous_tests.json'
+                file_path = f'SSU_Unlearn/data_csv_single/time_step_{time_step_num}/time_step_{time_step_num}_combined_previous_tests.json'
             else:
-                file_path = f'llm_copyright/data_csv_single/time_step_{time_step_num}/time_step_{time_step_num}_{train_or_test}_dataset_unlearn.json'
+                file_path = f'SSU_Unlearn/data_csv_single/time_step_{time_step_num}/time_step_{time_step_num}_{train_or_test}_dataset_unlearn.json'
         else:
             if args.previous_time_steps:
                 print("Evaluating on previously unlearned data")
                 assert time_step_num > 1
-                file_path = f'llm_copyright/data_csv/time_step_{time_step_num}/time_step_{time_step_num}_combined_previous_tests.json'
+                file_path = f'SSU_Unlearn/data_csv/time_step_{time_step_num}/time_step_{time_step_num}_combined_previous_tests.json'
             else:
-                file_path = f'llm_copyright/data_csv/time_step_{time_step_num}/time_step_{time_step_num}_{train_or_test}_dataset_unlearn.json'
+                file_path = f'SSU_Unlearn/data_csv/time_step_{time_step_num}/time_step_{time_step_num}_{train_or_test}_dataset_unlearn.json'
 
     if not args.eval_mmlu_only:
         print("File path being evaluated is: ", file_path)

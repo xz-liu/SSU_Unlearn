@@ -3,3 +3,4 @@
 .env
 data/
 text_completion_data/
+*/CoTaEval/data-portraits/redis-stable/RedisBloom/**/*.d

@@ -5,8 +5,6 @@
 #base_dir="./instances"
 #datestamp=$(date +"%Y-%m-%d_%H-%M-%S")
 #run_name="${datestamp}"_"$RANDOM"
-#re_bloom="/nlp/data/gydou/llm_copyright/CoTaEval/data-portraits/redis-stable/RedisBloom/bin/linux-x64-release/redisbloom.so"
-#conf_file="/nlp/data/gydou/llm_copyright/CoTaEval/data-portraits/redis.conf"
 #
 #echo $run_name
 #run_dir=$base_dir/$run_name
@@ -48,8 +46,8 @@ port=${1:-8899}
 base_dir="./instances"
 datestamp=$(date +"%Y-%m-%d_%H-%M-%S")
 run_name="${datestamp}"_"$RANDOM"
-re_bloom="/nlp/data/gydou/llm_copyright/CoTaEval/data-portraits/redis-stable/RedisBloom/bin/linux-x64-release/redisbloom.so"
-conf_file="/nlp/data/gydou/llm_copyright/CoTaEval/data-portraits/redis.conf"
+re_bloom="./SSU_Unlearn/CoTaEval/data-portraits/redis-stable/RedisBloom/bin/linux-x64-release/redisbloom.so"
+conf_file="./SSU_Unlearn/CoTaEval/data-portraits/redis.conf"
 
 #echo $run_name
 run_dir=$base_dir/$run_name

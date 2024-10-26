@@ -59,7 +59,7 @@ file_list_llama2_7b_chat_news_memorization = {"vanilla": "res/output_res_process
 
 time_step_num = 1
 file_list_llama3_1_8b_gutenberg_books_memorization={
-    "vanilla":"llm_copyright/res/output_res_processed/"
+    "vanilla":"SSU_Unlearn/res/output_res_processed/"
 }
 def win_rate_rag(file_list):
     res_vanilla = pd.read_csv(file_list['vanilla'])

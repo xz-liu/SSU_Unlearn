@@ -11,7 +11,7 @@ import pandas as pd
 def display_result_single(args):
     if args.input_file is None:
         input_file = (
-            f"llm_copyright/CoTaEval/eval/FastChat_new/fastchat/llm_judge/data/{args.bench_name}/model_judgment/{args.judge_model}_single.jsonl"
+            f"SSU_Unlearn/CoTaEval/eval/FastChat_new/fastchat/llm_judge/data/{args.bench_name}/model_judgment/{args.judge_model}_single.jsonl"
         )
         input_file = os.path.join(args.base_dir, input_file)
     else:
@@ -38,13 +38,13 @@ def display_result_single(args):
         df_3 = df[["model", "score"]].groupby(["model"]).mean()
         print(df_3.sort_values(by="score", ascending=False))
         # save df_3 to csv
-        df_3.to_csv(f"llm_copyright/CoTaEval/eval/FastChat_new/fastchat/llm_judge/data/{args.bench_name}/show_results/display_results.csv")
+        df_3.to_csv(f"SSU_Unlearn/CoTaEval/eval/FastChat_new/fastchat/llm_judge/data/{args.bench_name}/show_results/display_results.csv")
 
 
 def display_result_pairwise(args):
     if args.input_file is None:
         input_file = (
-            f"llm_copyright/CoTaEval/eval/FastChat_new/fastchat/llm_judge/data/{args.bench_name}/model_judgment/{args.judge_model}_pair.jsonl"
+            f"SSU_Unlearn/CoTaEval/eval/FastChat_new/fastchat/llm_judge/data/{args.bench_name}/model_judgment/{args.judge_model}_pair.jsonl"
         )
         input_file = os.path.join(args.base_dir, input_file)
     else:
@@ -99,7 +99,6 @@ def display_result_pairwise(args):
 
 
 if __name__ == "__main__":
-    # python llm_copyright/CoTaEval/eval/FastChat_new/fastchat/llm_judge/show_result.py --base_dir /nlp/data/gydou --model-list
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--base_dir",

@@ -6,7 +6,6 @@ import os
 import csv
 from transformers import AutoTokenizer
 
-#  redis-server --loadmodule /nlp/data/gydou/llm_copyright/CoTaEval/data-portraits/redis-stable/RedisBloom/bin/linux-x64-release/redisbloom.so
 #  ps aux | grep redis-server
 # Connect to Redis
 subprocess.run(f"python easy_redis.py --shutdown", shell=True, check=True, capture_output=True)
@@ -48,7 +47,7 @@ def main(args):
     elif datatype == 'booksum':
         path = '../eval_data/booksum/booksum_blocklisted_infringement.csv'
     elif datatype == 'gutenberg_books':
-        path = f'/nlp/data/gydou/llm_copyright/data_csv_single/time_step_{time_step_num}/time_step_{time_step_num}_combined_dataset_bf.csv'
+        path = f'./SSU_Unlearn/data_csv_single/time_step_{time_step_num}/time_step_{time_step_num}_combined_dataset_bf.csv'
 
 
     # List of lyrics
@@ -87,7 +86,7 @@ def main(args):
     print("current directory is", os.getcwd())
 
     # Define the base directory path
-    base_dir = '/nlp/data/gydou/llm_copyright/CoTaEval/data-portraits/bloom_filters'
+    base_dir = './SSU_Unlearn/CoTaEval/data-portraits/bloom_filters'
 
     # Determine the specific subdirectory based on the tokenized flag
     if datatype != 'gutenberg_books':

@@ -136,7 +136,6 @@ def make_match_single(
 
 
 def make_judge_pairwise(judge_model, judge_prompts):
-    # python llm_copyright/CoTaEval/eval/FastChat_new/fastchat/llm_judge/gen_judgment.py --base_dir /nlp/data/gydou --parallel 10 --model-list
     judges = {}
     judges["default"] = Judge(judge_model, judge_prompts["pair-v2"])
     judges["math"] = Judge(judge_model, judge_prompts["pair-math-v1"], ref_based=True)
@@ -185,7 +184,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--judge-file",
         type=str,
-        default="llm_copyright/CoTaEval/eval/FastChat_new/fastchat/llm_judge/data/judge_prompts.jsonl",
+        default="SSU_Unlearn/CoTaEval/eval/FastChat_new/fastchat/llm_judge/data/judge_prompts.jsonl",
         help="The file of judge prompts.",
     )
     parser.add_argument("--judge-model", type=str, default="gpt-4")
@@ -217,9 +216,9 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    question_file = f"llm_copyright/CoTaEval/eval/FastChat_new/fastchat/llm_judge/data/{args.bench_name}/question.jsonl"
-    answer_dir = f"llm_copyright/CoTaEval/eval/FastChat_new/fastchat/llm_judge/data/{args.bench_name}/model_answer"
-    ref_answer_dir = f"llm_copyright/CoTaEval/eval/FastChat_new/fastchat/llm_judge/data/{args.bench_name}/reference_answer"
+    question_file = f"SSU_Unlearn/CoTaEval/eval/FastChat_new/fastchat/llm_judge/data/{args.bench_name}/question.jsonl"
+    answer_dir = f"SSU_Unlearn/CoTaEval/eval/FastChat_new/fastchat/llm_judge/data/{args.bench_name}/model_answer"
+    ref_answer_dir = f"SSU_Unlearn/CoTaEval/eval/FastChat_new/fastchat/llm_judge/data/{args.bench_name}/reference_answer"
 
     question_file = os.path.join(args.base_dir, question_file)
     answer_dir = os.path.join(args.base_dir, answer_dir)
@@ -247,7 +246,7 @@ if __name__ == "__main__":
         judges = make_judge_single(args.judge_model, judge_prompts)
         play_a_match_func = play_a_match_single
         output_file = (
-            f"llm_copyright/CoTaEval/eval/FastChat_new/fastchat/llm_judge/data/{args.bench_name}/model_judgment/{args.judge_model}_single.jsonl"
+            f"SSU_Unlearn/CoTaEval/eval/FastChat_new/fastchat/llm_judge/data/{args.bench_name}/model_judgment/{args.judge_model}_single.jsonl"
         )
         output_file = os.path.join(args.base_dir, output_file)
         make_match_func = make_match_single
@@ -256,7 +255,7 @@ if __name__ == "__main__":
         judges = make_judge_pairwise(args.judge_model, judge_prompts)
         play_a_match_func = play_a_match_pair
         output_file = (
-            f"llm_copyright/CoTaEval/eval/FastChat_new/fastchat/llm_judge/data/{args.bench_name}/model_judgment/{args.judge_model}_pair.jsonl"
+            f"SSU_Unlearn/CoTaEval/eval/FastChat_new/fastchat/llm_judge/data/{args.bench_name}/model_judgment/{args.judge_model}_pair.jsonl"
         )
         output_file = os.path.join(args.base_dir, output_file)
         if args.mode == "pairwise-all":
