@@ -10,7 +10,7 @@ def convert_csv_to_json(csv_file_path, output_dir, time_step_num, mode):
 
     # Shuffle the DataFrame with a fixed seed and split into train and test sets
     if mode == "train":
-        train_df, test_df = train_test_split(df, test_size=0.3, random_state=42)
+        train_df, test_df = train_test_split(df, test_size=0, random_state=42)
 
         # Create lists of dictionaries for train and test data
         train_qa_pairs = [
@@ -57,7 +57,6 @@ for time_step_num in range(1, 11):
     csv_file_path = f'data_csv_single/time_step_{time_step_num}/time_step_{time_step_num}_combined_dataset_unlearn.csv'
     output_dir = f'data_csv_single/time_step_{time_step_num}'
 
-    # Specify the mode: "train" or "test"
-    mode = "train"  # or "test" depending on your requirement
+    mode = "train"
     
     convert_csv_to_json(csv_file_path, output_dir, time_step_num, mode)
