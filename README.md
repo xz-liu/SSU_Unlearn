@@ -1,12 +1,28 @@
-# Stable Sequential Unlearning
+<p align="center">
 
-This is the code and repo for Stable Sequential Unlearning (SSU). 
+<img src="assets/ssu.png" alt="SSU_Unlearn"/>
 
-## Installation
-You need to install packages described in [requirements.txt](requirements.txt). We strongly recommend using a Conda environment. You will also need
+</p>
+
+<div align="center">
+
+# <img src="assets/ssu_avatar.png" style="height: 1em; vertical-align: middle;" /> SSU: A Framework for Sequential Unlearning of Copyrighted Contents from LLMs.
+
+</div>
+
+<div align="center">
+
+</div>
+
+## Overview
+ Pre-trained Large Language Models (LLMs) have demonstrated remarkable capabilities but also pose risks by learning and generating copyrighted material, leading to significant legal and ethical concerns. In real-world scenarios, model owners need to continuously address copyright infringement as new requests for content removal emerge at different time points. This leads to the need for sequential unlearning, where copyrighted content is removed sequentially as new requests arise. Despite its practical relevance, sequential unlearning in the context of copyright infringement has not been rigorously explored in existing literature. To address this gap, we propose Stable Sequential Unlearning (SSU), a novel framework designed to unlearn copyrighted content from LLMs over multiple time steps. Our approach works by identifying and removing specific weight updates in the model's parameters that correspond to copyrighted content. We improve unlearning efficacy by introducing random labeling loss and ensuring the model retains its general-purpose knowledge by adjusting targeted parameters. Experimental results show that SSU achieves an effective trade-off between unlearning efficacy and general-purpose language abilities, outperforming existing baselines.
+
+You can check out the paper [here](https://arxiv.org/abs/2406.10952), which has been accepted to NAACL-Findings 2025.
+## ⚙️ Installation
+You need to install packages described in [requirements.txt](requirements.txt). You will also need
 a .env file to store you HF_ACCESS_TOKEN to download Llama models.
 
-## Dataset Setup
+## 🛠️ Dataset Setup
 
 To begin, obtain the `.txt` versions of the books. You can either purchase them or download them from public sources, such as [Project Gutenberg](https://gutenberg.org/), or you can crawl and preprocess
 these books by following [gutenberg](https://github.com/pgcorpus/gutenberg).
@@ -27,7 +43,7 @@ python generate_json.py
 python combine_previous_json.py
 ```
 
-## Fine-tuning 
+## 🏃Fine-tuning 
 To fine-tune the model, you can use the [fine_tune_books.py](fine_tune_books.py) script. 
 
 The script create_training_data.py requires the following parameters:
@@ -65,7 +81,7 @@ In addition, if you are interested in running ablation studies, you can use the 
 Lastly, in order to fine-tune a model on $D_f$, you should use the intervention "unlearning_gd_none". 
 
 
-## Evaluation
+## 📊 Evaluation
 
 Please install [CoTaEval](https://github.com/boyiwei/CoTaEval/tree/main) to download MMLU dataset,
 setup Bloom filters for MemFree Decode, and setup MT-Bench running environment. For MT-Bench, you will need to 
@@ -104,3 +120,24 @@ Specifically, available intervention methods are: "sys_prompt-sys_none", "sys_pr
 
 If you want to run ablation studies, you can set intervention to be "unlearning_tv_ssu_no_weight_saliency",
   or  "unlearning_tv_ssu_no_random_loss".
+
+
+## 🙏 Acknowledgements and Citation 🙏
+
+We thank the following open-source repositories. If aspects of these repositories appearing in SSU are useful to you in your research, we ask that you consider citing the accompanying papers.
+```angular2html
+[1] https://github.com/lm-sys/FastChat
+[2] https://github.com/pgcorpus/gutenberg
+[3] https://github.com/boyiwei/CoTaEval
+[4] https://github.com/huggingface/transformers
+```
+
+If you find HarmBench useful in your research, please consider citing our [paper](https://arxiv.org/abs/2402.04249):
+```
+@article{dou2024avoiding,
+  title={Avoiding Copyright Infringement via Machine Unlearning},
+  author={Dou, Guangyao and Liu, Zheyuan and Lyu, Qing and Ding, Kaize and Wong, Eric},
+  journal={arXiv preprint arXiv:2406.10952},
+  year={2024}
+}
+```
