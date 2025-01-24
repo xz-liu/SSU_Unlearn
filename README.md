@@ -131,8 +131,8 @@ We thank the following open-source repositories. If aspects of these repositorie
 [3] https://github.com/boyiwei/CoTaEval
 [4] https://github.com/huggingface/transformers
 ```
-
-If you find HarmBench useful in your research, please consider citing our [paper](https://arxiv.org/abs/2402.04249):
+  
+If you find SSU useful in your research, please consider citing our [paper](https://arxiv.org/abs/2402.04249):
 ```
 @article{dou2024avoiding,
   title={Avoiding Copyright Infringement via Machine Unlearning},
