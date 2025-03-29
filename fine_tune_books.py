@@ -437,65 +437,72 @@ if __name__ == '__main__':
         bnb_4bit_compute_dtype=torch.bfloat16
     )
 
-    if unlearning_method=="tv":
+    if unlearning_method == "tv":
         print("Start applying task vector to the model.")
         base_model_name = config['base_model_name']
-        # pre_trained_model = AutoModelForCausalLM.from_pretrained(base_model_name, quantization_config=bnb_config,
-        #                                                          device_map="auto", token=access_token,
-        #                                                          cache_dir=args.model_dir)
         modified_base_model_name = extract_model_name(base_model_name)
-        # if time_step_num == 1:
-        #     if config["use_quantization"]:
-        #         pre_trained_model = AutoModelForCausalLM.from_pretrained(base_model_name, quantization_config=bnb_config,
-        #                                                                  device_map="auto", token=access_token,
-        #                                                                  cache_dir=args.model_dir)
-        #     else:
-        #         pre_trained_model = AutoModelForCausalLM.from_pretrained(base_model_name, torch_dtype=torch.float16,
-        #                                                                  device_map="auto", token=access_token,
-        #                                                                  cache_dir=args.model_dir)
+
         if time_step_num == 1:
-            modified_base_model_name_edited = f"Mistral-7B-Instruct-v0.3_time_step_10_intervention_unlearning_gd_none"
-            model_checkpoint_path = os.path.join(args.model_dir, modified_base_model_name_edited)
+            model_checkpoint_path = base_model_name
             print("Loading Model checkpoint path: ", model_checkpoint_path)
             if config["use_quantization"]:
-                pre_trained_model = AutoModelForCausalLM.from_pretrained(model_checkpoint_path, quantization_config=bnb_config,
-                                                             device_map="auto", token=access_token,
-                                                             cache_dir=args.model_dir)
+                pre_trained_model = AutoModelForCausalLM.from_pretrained(
+                    model_checkpoint_path,
+                    quantization_config=bnb_config,
+                    device_map="auto",
+                    token=access_token,
+                    cache_dir=args.model_dir
+                )
             else:
-                pre_trained_model = AutoModelForCausalLM.from_pretrained(model_checkpoint_path,
-                                                             device_map="auto",
-                                                             token=access_token,
-                                                             torch_dtype=torch.float16,
-                                                             cache_dir=args.model_dir)
+                pre_trained_model = AutoModelForCausalLM.from_pretrained(
+                    model_checkpoint_path,
+                    device_map="auto",
+                    token=access_token,
+                    torch_dtype=torch.float16,
+                    cache_dir=args.model_dir
+                )
         elif time_step_num > 1:
             intervention = config["intervention"]
-            if intervention != "unlearning_tv_ssu_no_weight_saliency" and intervention != "unlearning_tv_ssu_no_random_loss":
+            if intervention not in ["unlearning_tv_ssu_no_weight_saliency", "unlearning_tv_ssu_no_random_loss"]:
                 print("Not running ablation studies")
                 intervention_to_load = get_first_three_components(intervention)
             else:
                 intervention_to_load = intervention
+
             modified_base_model_name_modified = f"{modified_base_model_name}_time_step_{time_step_num - 1}_intervention_{intervention_to_load}"
             model_checkpoint_path = os.path.join(args.model_dir, modified_base_model_name_modified)
             print("Provided intervention is", intervention)
             print("Loading model from checkpoint", model_checkpoint_path)
             if config["use_quantization"]:
-                pre_trained_model = AutoModelForCausalLM.from_pretrained(model_checkpoint_path, quantization_config=bnb_config,
-                                                                         device_map="auto", token=access_token,
-                                                                         cache_dir=args.model_dir)
+                pre_trained_model = AutoModelForCausalLM.from_pretrained(
+                    model_checkpoint_path,
+                    quantization_config=bnb_config,
+                    device_map="auto",
+                    token=access_token,
+                    cache_dir=args.model_dir
+                )
             else:
-                pre_trained_model = AutoModelForCausalLM.from_pretrained(model_checkpoint_path, torch_dtype=torch.float16,
-                                                                         device_map="auto", token=access_token,
-                                                                         cache_dir=args.model_dir)
+                pre_trained_model = AutoModelForCausalLM.from_pretrained(
+                    model_checkpoint_path,
+                    torch_dtype=torch.float16,
+                    device_map="auto",
+                    token=access_token,
+                    cache_dir=args.model_dir
+                )
         else:
             raise ValueError("The time step number is not valid. It has to be at least one")
+        with torch.no_grad():
+            finetuned_sd = model.state_dict()  # finetuned checkpoint
+            for name, param in pre_trained_model.named_parameters():
+                if name not in finetuned_sd:
+                    print(f"Warning: key {name} is missing from the finetuned state dict.")
+                    continue
+                # In-place update: new_param = 2 * pretrained_param - finetuned_param
+                param.mul_(2).sub_(finetuned_sd[name])
 
-        task_vector = TaskVector(pretrained_checkpoint=pre_trained_model, finetuned_checkpoint=model)
-        neg_task_vector = -task_vector
-
-        new_unlearned_model = neg_task_vector.apply_to(pretrained_model=pre_trained_model)
         print("Task vector applied to the model.")
-        print(new_unlearned_model)
-        model = new_unlearned_model
+        model = pre_trained_model
+
     print("The model will be saved to", output_dir)
     model.save_pretrained(output_dir, from_pt=True)
     print("Model saved.")
