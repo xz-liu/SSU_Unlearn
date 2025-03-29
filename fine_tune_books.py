@@ -20,7 +20,6 @@ import utils
 from config.fine_tune_config import bnb_config, lora_config, config, ssu_lora_config
 from utils_data import create_copyrights_dataloader
 os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'expandable_segments:True'
-from task_vector import TaskVector
 import torch.nn.functional as F
 import os
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
