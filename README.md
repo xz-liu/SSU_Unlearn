@@ -36,11 +36,7 @@ these books by following [gutenberg](https://github.com/pgcorpus/gutenberg).
 Once the directory structure is set up, execute the following commands in sequence:
 
 ```bash
-python create_training_data_csv.py --input_dir {PATH_TO_DATA}
-python create_training_data_bf.py
-python generate_json_train_test.py
-python generate_json.py
-python combine_previous_json.py
+python preprocess_data.py --input_dir {PATH_TO_DATA}
 ```
 
 ## 🏃Fine-tuning 
